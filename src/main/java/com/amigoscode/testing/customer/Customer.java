@@ -8,13 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @JsonIgnoreProperties(value = {"id"}, allowGetters = true)
-public class Customer {
+public class Customer implements Serializable {
 
     @Id
     private UUID id;

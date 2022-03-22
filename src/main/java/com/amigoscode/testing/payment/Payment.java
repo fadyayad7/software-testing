@@ -1,6 +1,7 @@
 package com.amigoscode.testing.payment;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
