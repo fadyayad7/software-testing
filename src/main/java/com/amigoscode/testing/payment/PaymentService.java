@@ -1,6 +1,5 @@
 package com.amigoscode.testing.payment;
 
-
 import com.amigoscode.testing.customer.Customer;
 import com.amigoscode.testing.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

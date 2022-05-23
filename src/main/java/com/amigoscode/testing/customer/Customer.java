@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@JsonIgnoreProperties(value = {"id"}, allowGetters = true)
+@JsonIgnoreProperties(/*value = {"id"},*/ allowGetters = true)
 public class Customer implements Serializable {
 
     @Id
