@@ -1,5 +1,6 @@
 package com.amigoscode.testing.customer;
 
+import com.amigoscode.testing.utils.PhoneNumberValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,13 +17,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.never;
 
 class CustomerRegistrationServiceTest {
 
     @Mock
     private CustomerRepository customerRepository; // = mock(CustomerRepository.class);
+
+    @Mock
+    private PhoneNumberValidator phoneNumberValidator;
 
     @Captor
     private ArgumentCaptor<Customer> customerArgumentCaptor;
@@ -32,7 +35,7 @@ class CustomerRegistrationServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.underTest = new CustomerRegistrationService(this.customerRepository);
+        this.underTest = new CustomerRegistrationService(this.customerRepository, phoneNumberValidator);
     }
 
     @Test
@@ -47,8 +50,12 @@ class CustomerRegistrationServiceTest {
         // no customer with phone number passed
         given(customerRepository.selectCustomerByPhoneNumber(phoneNumber)).willReturn(Optional.empty());
 
+        //assume phone number is valid
+        given(phoneNumberValidator.test(phoneNumber)).willReturn(true);
+
         //When
         underTest.registerNewCustomer(customerRegistrationRequest);
+
 
         //Then
         then(customerRepository).should().save(customerArgumentCaptor.capture()); //result from save method
@@ -67,6 +74,9 @@ class CustomerRegistrationServiceTest {
 
         // no customer with phone number passed
         given(customerRepository.selectCustomerByPhoneNumber(phoneNumber)).willReturn(Optional.empty());
+
+        //assume phone number is valid
+        given(phoneNumberValidator.test(phoneNumber)).willReturn(true);
 
         //When
         underTest.registerNewCustomer(customerRegistrationRequest);
@@ -91,6 +101,9 @@ class CustomerRegistrationServiceTest {
         // a customer is returned
         given(customerRepository.selectCustomerByPhoneNumber(phoneNumber)).willReturn(Optional.of(customer));
 
+        //assume phone number is valid
+        given(phoneNumberValidator.test(phoneNumber)).willReturn(true);
+
         //When
         underTest.registerNewCustomer(customerRegistrationRequest);
 
@@ -110,6 +123,9 @@ class CustomerRegistrationServiceTest {
 
         // a customer is returned
         given(customerRepository.selectCustomerByPhoneNumber(phoneNumber)).willReturn(Optional.of(customer));
+
+        //assume phone number is valid
+        given(phoneNumberValidator.test(phoneNumber)).willReturn(true);
 
 
         //When
